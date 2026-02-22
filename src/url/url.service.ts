@@ -4,14 +4,19 @@ import { Model } from 'mongoose';
 import { Url } from '../schemas/url.schema';
 import { CreateUrlDto } from '../dto/create-url.dto';
 import {nanoid} from 'nanoid';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UrlService {
-  private readonly baseUrl = 'http://localhost:5000/api/v1';
+
+  private readonly baseUrl : string
 
   constructor(
     @InjectModel(Url.name) private urlModel: Model<Url>,
-  ) {}
+    private readonly configService: ConfigService
+  ) {
+    this.configService.getOrThrow<string>('BASE_URL');
+  }
 
   
   private generateShortCode(): string {
