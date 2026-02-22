@@ -15,7 +15,7 @@ export class UrlService {
     @InjectModel(Url.name) private urlModel: Model<Url>,
     private readonly configService: ConfigService
   ) {
-    this.configService.getOrThrow<string>('BASE_URL');
+    this.baseUrl = this.configService.getOrThrow<string>('BASE_URL');
   }
 
   
